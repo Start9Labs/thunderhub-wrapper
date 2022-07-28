@@ -1,8 +1,9 @@
 id: thunderhub
 title: Thunderhub
-version: 0.13.13
+version: 0.13.14
 release-notes: |
-  * Switch to using new EOS APIs for faster configuration and properties
+  * Upstream update to Thunderhub v0.13.14
+  * Improved health check indicator and migration
 license: mit
 wrapper-repo: https://github.com/Start9Labs/thunderhub-wrapper
 upstream-repo: https://github.com/apotdevin/thunderhub
@@ -73,7 +74,7 @@ interfaces:
       - http
 dependencies:
   lnd:
-    version: ">=0.12.1 <0.15.0"
+    version: ">=0.12.1 <0.16.0"
     description: Thunderhub is an LND Manager
     requirement:
       type: required
@@ -109,21 +110,10 @@ backup:
     io-format: yaml
 migrations:
   from:
-    ">=0.12.0 <=0.13.13":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
+    "*":
+      type: script
+      args: ["from"]
   to:
-    ">=0.12.0 <=0.13.13":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
-
+    "*":
+      type: script
+      args: ["to"]
